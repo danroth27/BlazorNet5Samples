@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Shared\BlazorNet5Samples.Shared.csproj" />
+    <ProjectReference Include="..\MyComponents\MyComponents.csproj" />
   </ItemGroup>
 
 </Project>
