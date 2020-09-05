@@ -8,6 +8,7 @@ using Microsoft.Extensions.Hosting;
 using System.Linq;
 using BlazorNet5Samples.Server.Data;
 using BlazorNet5Samples.Shared;
+using MyComponents;
 
 namespace BlazorNet5Samples.Server
 {
@@ -29,6 +30,7 @@ namespace BlazorNet5Samples.Server
             services.AddServerSideBlazor();
             services.AddRazorPages();
             services.AddSingleton<IWeatherForecastService, WeatherForecastService>();
+            services.AddScoped<ExampleJsInterop>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

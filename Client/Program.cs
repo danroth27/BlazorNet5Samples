@@ -9,6 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using BlazorNet5Samples.Client.Data;
 using BlazorNet5Samples.Shared;
+using MyComponents;
 
 namespace BlazorNet5Samples.Client
 {
@@ -20,6 +21,7 @@ namespace BlazorNet5Samples.Client
 
             builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
             builder.Services.AddScoped<IWeatherForecastService, WeatherForecastService>();
+            builder.Services.AddScoped<ExampleJsInterop>();
 
             await builder.Build().RunAsync();
         }
