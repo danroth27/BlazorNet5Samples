@@ -5,6 +5,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace BlazorNet5Samples.Server.Controllers
@@ -21,9 +22,13 @@ namespace BlazorNet5Samples.Server.Controllers
         }
 
         [HttpGet]
-        public Task<IEnumerable<WeatherForecast>> Get()
+        public async Task<ActionResult<WeatherForecast[]>> Get(int daysFromNow, int count)
         {
-            return _weatherForecastService.GetForecastAsync();
+            if (daysFromNow + count > 10000)
+            {
+                return BadRequest("The weather can only be predicted 10,000 days in the future!");
+            }
+            return await _weatherForecastService.GetForecastAsync(daysFromNow, count);
         }
     }
 }

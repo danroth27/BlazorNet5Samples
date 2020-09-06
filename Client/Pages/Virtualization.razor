@@ -1,0 +1,127 @@
+﻿@page "/virtualize"
+
+@using System.Threading
+@inject IWeatherForecastService ForecastService
+
+<h1>Virtualization</h1>
+
+<hr />
+
+<div class="weather-container">
+    <div class="weather-table">
+        <h4>Loaded all at once:</h4>
+
+        @if (forecasts == null)
+        {
+            <p><em>Loading...</em></p>
+        }
+        else
+        {
+            <ForecastTable>
+                <Virtualize Items="forecasts" ItemSize="itemHeight">
+                    <tr @key="context.GetHashCode()" style="@ItemStyle">
+                        <td>@context.Date.ToShortDateString()</td>
+                        <td>@context.TemperatureC</td>
+                        <td>@context.TemperatureF</td>
+                        <td>@context.Summary</td>
+                    </tr>
+                </Virtualize>
+            </ForecastTable>
+        }
+    </div>
+
+    <div class="weather-table">
+        <h4>Loaded on-the-fly:</h4>
+        <ForecastTable>
+            <Virtualize ItemsProvider="LoadForecast" ItemSize="itemHeight">
+                <ItemContent>
+                    <tr @key="context.GetHashCode()" style="@ItemStyle">
+                        <td>@context.Date.ToShortDateString()</td>
+                        <td>@context.TemperatureC</td>
+                        <td>@context.TemperatureF</td>
+                        <td>@context.Summary</td>
+                    </tr>
+                </ItemContent>
+                <Placeholder>
+                    <tr style="@ItemStyle">
+                        <td>@(DateTime.Now.AddDays(context.Index).ToShortDateString())</td>
+                        <td>Loading...</td>
+                        <td>Loading...</td>
+                        <td>Loading...</td>
+                    </tr>
+                </Placeholder>
+            </Virtualize>
+        </ForecastTable>
+    </div>
+
+    <div class="weather-table">
+        <h4>Loaded on-the-fly and cached:</h4>
+
+        <ForecastTable>
+            <Virtualize ItemsProvider="LoadAndCacheForecast" ItemSize="itemHeight">
+                <ItemContent>
+                    <tr @key="context.GetHashCode()" style="@ItemStyle">
+                        <td>@context.Date.ToShortDateString()</td>
+                        <td>@context.TemperatureC</td>
+                        <td>@context.TemperatureF</td>
+                        <td>@context.Summary</td>
+                    </tr>
+                </ItemContent>
+                <Placeholder>
+                    <tr style="@ItemStyle">
+                        <td>@(DateTime.Now.AddDays(context.Index).ToShortDateString())</td>
+                        <td>Loading...</td>
+                        <td>Loading...</td>
+                        <td>Loading...</td>
+                    </tr>
+                </Placeholder>
+            </Virtualize>
+        </ForecastTable>
+    </div>
+</div>
+
+@code {
+    float itemHeight = 50;
+    int totalForecastCount = 10000;
+
+    WeatherForecast[] forecasts;
+
+    Dictionary<int, WeatherForecast> cachedForecasts = new Dictionary<int, WeatherForecast>();
+
+    string ItemStyle => $"height: {itemHeight}px;";
+
+    protected override async Task OnInitializedAsync()
+    {
+        forecasts = await ForecastService.GetForecastAsync(0, totalForecastCount);
+    }
+
+    async ValueTask<ItemsProviderResult<WeatherForecast>> LoadForecast(ItemsProviderRequest request)
+    {
+        var numForecasts = Math.Min(request.Count, totalForecastCount - request.StartIndex);
+        var forecasts = await ForecastService.GetForecastAsync(request.StartIndex, numForecasts);
+
+        return new ItemsProviderResult<WeatherForecast>(forecasts, totalForecastCount);
+    }
+
+    async ValueTask<ItemsProviderResult<WeatherForecast>> LoadAndCacheForecast(ItemsProviderRequest request)
+    {
+        var forecasts = new List<WeatherForecast>();
+
+        var numForecasts = Math.Min(request.Count, totalForecastCount - request.StartIndex);
+
+        foreach (var i in Enumerable.Range(request.StartIndex, numForecasts))
+        {
+            WeatherForecast forecast;
+
+            if (!cachedForecasts.TryGetValue(i, out forecast))
+            {
+                forecast = (await ForecastService.GetForecastAsync(i, 1)).Single();
+                cachedForecasts[i] = forecast;
+            }
+
+            forecasts.Add(forecast);
+        }
+
+        return new ItemsProviderResult<WeatherForecast>(forecasts, totalForecastCount);
+    }
+}

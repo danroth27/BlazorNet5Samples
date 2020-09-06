@@ -1,0 +1,7 @@
+﻿.weather-container {
+    display: flex;
+}
+
+.weather-table {
+    width: 100%;
+}
