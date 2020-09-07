@@ -1,0 +1,7 @@
+﻿
+.image-list {
+    display: grid;
+    grid-template-columns: repeat(5, 100px);
+    grid-gap: 10px;
+    margin-top: 10px;
+}

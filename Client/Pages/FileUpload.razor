@@ -1,0 +1,31 @@
+﻿@page "/file-upload"
+
+<h1>File upload</h1>
+
+<InputFile OnChange="OnInputFileChange" multiple/>
+
+<div class="image-list">
+    @foreach (var imageDataUrl in imageDataUrls)
+    {
+        <img src="@imageDataUrl" />
+    }
+</div>
+
+@code {
+    IList<string> imageDataUrls = new List<string>();
+
+    async Task OnInputFileChange(InputFileChangeEventArgs e)
+    {
+        var imageFiles = e.GetMultipleFiles();//.Where(file => file.ContentType.StartsWith("image/"));
+
+        var format = "image/png";
+        foreach (var imageFile in imageFiles)
+        {
+            var resizedImageFile = await imageFile.RequestImageFileAsync(format, 100, 100);
+            var buffer = new byte[resizedImageFile.Size];
+            await resizedImageFile.OpenReadStream().ReadAsync(buffer);
+            var imageDataUrl = $"data:{format};base64,{Convert.ToBase64String(buffer)}";
+            imageDataUrls.Add(imageDataUrl);
+        }
+    }
+}
