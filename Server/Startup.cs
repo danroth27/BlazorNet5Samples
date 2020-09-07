@@ -32,7 +32,6 @@ namespace BlazorNet5Samples.Server
             services.AddSingleton<IWeatherForecastService, WeatherForecastService>();
             services.AddScoped<ExampleJsInterop>();
             services.AddProtectedBrowserStorage();
-
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

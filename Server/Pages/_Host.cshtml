@@ -1,5 +1,4 @@
 ﻿@page "/"
-@using BlazorNet5Samples.Client
 @namespace BlazorNet5Samples.Pages
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @{
@@ -19,7 +18,15 @@
     <link href="_framework/scoped.styles.css" rel="stylesheet" />
 </head>
 <body>
-    <component type="typeof(App)" render-mode="@(wasm ? RenderMode.WebAssemblyPrerendered : RenderMode.ServerPrerendered)" />
+    @if (wasm)
+    {
+        <component type="typeof(BlazorNet5Samples.Client.App)" render-mode="WebAssemblyPrerendered" />
+    }
+    else
+    {
+        <component type="typeof(BlazorNet5Samples.Server.App)" render-mode="ServerPrerendered" />
+    }
+
 
     <div id="blazor-error-ui">
         <environment include="Staging,Production">

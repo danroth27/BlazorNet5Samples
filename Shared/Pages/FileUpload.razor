@@ -16,7 +16,7 @@
 
     async Task OnInputFileChange(InputFileChangeEventArgs e)
     {
-        var imageFiles = e.GetMultipleFiles();//.Where(file => file.ContentType.StartsWith("image/"));
+        var imageFiles = e.GetMultipleFiles();
 
         var format = "image/png";
         foreach (var imageFile in imageFiles)
