@@ -1,0 +1,21 @@
+﻿@page "/influence-html-head"
+
+<h1>Influence the HTML head</h1>
+
+<p>Notice how the title and icon in the browser tab changes when you click the button below to trigger a notification.</p>
+@if (hasUnreadNotification)
+{
+    <button class="btn btn-primary" @onclick="() => hasUnreadNotification = false">Read notifcation</button>
+    <Title Value="(1) Demo"></Title>
+    <Link rel="icon" href="icon-unread.ico" />
+}
+else
+{
+    <button class="btn btn-primary" @onclick="() => hasUnreadNotification = true">Trigger notification</button>
+    <Title Value="Demo"></Title>
+    <Link rel="icon" href="icon.ico" />
+}
+
+@code {
+    bool hasUnreadNotification = false;
+}

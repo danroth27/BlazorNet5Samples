@@ -1,6 +1,7 @@
 using BlazorNet5Samples.Server.Data;
 using BlazorNet5Samples.Shared;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Components.ProtectedBrowserStorage;
 using Microsoft.AspNetCore.Components.WebAssembly.Services;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -28,7 +29,13 @@ namespace BlazorNet5Samples.Server
             services.AddRazorPages();
             services.AddSingleton<IWeatherForecastService, WeatherForecastService>();
             services.AddScoped<ExampleJsInterop>();
-            services.AddProtectedBrowserStorage();
+
+            //services.AddProtectedBrowserStorage();
+            // Workaround
+            services.AddDataProtection();
+            services.AddScoped<ProtectedLocalStorage>();
+            services.AddScoped<ProtectedSessionStorage>();
+
             services.AddScoped<LazyAssemblyLoader>();
         }
 
