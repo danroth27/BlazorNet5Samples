@@ -25,13 +25,13 @@ namespace BlazorNet5Samples.Server
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-
             services.AddControllersWithViews();
             services.AddServerSideBlazor();
             services.AddRazorPages();
             services.AddSingleton<IWeatherForecastService, WeatherForecastService>();
             services.AddScoped<ExampleJsInterop>();
             services.AddProtectedBrowserStorage();
+            services.AddSampleProvider(options => options.Assemblies.Add(typeof(Program).Assembly));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

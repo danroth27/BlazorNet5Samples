@@ -1,8 +1,9 @@
 ﻿@page "/file-upload"
+@attribute [Sample("File upload")]
 
 <h1>File upload</h1>
 
-<InputFile OnChange="OnInputFileChange" multiple/>
+<InputFile OnChange="OnInputFileChange" multiple />
 
 <div class="image-list">
     @foreach (var imageDataUrl in imageDataUrls)
