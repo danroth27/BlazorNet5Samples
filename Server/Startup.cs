@@ -1,14 +1,12 @@
+using BlazorNet5Samples.Server.Data;
+using BlazorNet5Samples.Shared;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Components.WebAssembly.Services;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System.Linq;
-using BlazorNet5Samples.Server.Data;
-using BlazorNet5Samples.Shared;
-using MyComponents;
+using MyJSInterop;
 
 namespace BlazorNet5Samples.Server
 {
@@ -31,7 +29,7 @@ namespace BlazorNet5Samples.Server
             services.AddSingleton<IWeatherForecastService, WeatherForecastService>();
             services.AddScoped<ExampleJsInterop>();
             services.AddProtectedBrowserStorage();
-            services.AddSampleProvider(options => options.Assemblies.Add(typeof(Program).Assembly));
+            services.AddScoped<LazyAssemblyLoader>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

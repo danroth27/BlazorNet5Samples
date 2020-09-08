@@ -1,0 +1,13 @@
+﻿@page "/lazy-loading"
+
+<h1>Lazy loading</h1>
+
+<p>Normally, Blazor downloads and loads all dependencies of the app when it’s first loaded. To delay the loading of a .NET assembly, you add it to the <code>BlazorWebAssemblyLazyLoad</code> item group in your project file</p>
+
+<p>Assemblies marked for lazy loading must be explicitly loaded by the app before they’re used. To lazy load assemblies at runtime, use the <code>LazyAssemblyLoader</code> service</p>
+
+<p>Often, assembles need to be loaded when the user navigates to a particular page. The <code>Router</code> component has a new <code>OnNavigateAsync</code> event that’s fired on every page navigation and can be used to lazy load assemblies for a particular route. You can also lazily load the entire page for a route by passing any loaded assemblies as additional assemblies to the <code>Router</code>.</p>
+
+<p>The following component is lazily loaded from MyComponents.dll:</p>
+
+<Component1 />

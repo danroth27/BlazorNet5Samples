@@ -14,5 +14,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\MyComponents\MyComponents.csproj" />
+    <ProjectReference Include="..\MyJSInterop\MyJSInterop.csproj" />
   </ItemGroup>
 </Project>

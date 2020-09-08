@@ -18,4 +18,8 @@
     <Folder Include="wwwroot\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <BlazorWebAssemblyLazyLoad Include="MyComponents.dll" />
+  </ItemGroup>
+
 </Project>

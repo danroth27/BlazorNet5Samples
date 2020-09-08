@@ -1,0 +1,14 @@
+﻿@page "/catch-all-route-parameters"
+@page "/catch-all-route-parameters/{*path}"
+
+<h1>Catch-all route parameters</h1>
+
+<p>Try appending to the address path and refreshing the page.</p>
+
+<p>Path: @Path</p>
+
+
+@code {
+    [Parameter]
+    public string Path { get; set; }
+}

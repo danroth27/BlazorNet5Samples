@@ -1,0 +1,10 @@
+﻿@page "/ui-focus"
+
+<h1>Set UI focus</h1>
+
+<button class="btn btn-primary" @onclick="() => input.FocusAsync()">Focus the input!</button>
+<input @ref="input" />
+
+@code {
+    ElementReference input;
+}

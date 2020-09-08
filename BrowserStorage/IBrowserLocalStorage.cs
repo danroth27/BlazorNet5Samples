@@ -6,8 +6,7 @@ using System.Threading.Tasks;
 
 namespace BlazorNet5Samples.Shared
 {
-    public interface ISampleProvider
+    public interface IBrowserLocalStorage : IBrowserStorage
     {
-        IEnumerable<(string Name, string Route)> GetSamples();
     }
 }

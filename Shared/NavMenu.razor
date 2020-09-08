@@ -1,5 +1,4 @@
 ﻿@inject NavigationManager NavigationManager
-@inject ISampleProvider SampleProvider
 
 <div class="top-row pl-4 navbar navbar-dark">
     <a class="navbar-brand" href="">BlazorNet5Samples</a>
@@ -29,14 +28,51 @@
                 <span class="oi oi-list-rich" aria-hidden="true"></span> Fetch data
             </NavLink>
         </li>
-        @foreach (var sample in SampleProvider.GetSamples())
-        {
-            <li class="nav-item px-3">
-                <NavLink class="nav-link" href="@sample.Route">
-                    <span class="oi oi-check" aria-hidden="true"></span> @sample.Name
-                </NavLink>
-            </li>
-        }
+        <li class="nav-item px-3">
+            <NavLink class="nav-link" href="css-isolation">
+                <span class="oi oi-check" aria-hidden="true"></span> CSS isolation
+            </NavLink>
+        </li>
+        <li class="nav-item px-3">
+            <NavLink class="nav-link" href="js-isolation">
+                <span class="oi oi-check" aria-hidden="true"></span> JavaScript isolation
+            </NavLink>
+        </li>
+        <li class="nav-item px-3">
+            <NavLink class="nav-link" href="file-upload">
+                <span class="oi oi-check" aria-hidden="true"></span> File upload
+            </NavLink>
+        </li>
+        <li class="nav-item px-3">
+            <NavLink class="nav-link" href="input-radio">
+                <span class="oi oi-check" aria-hidden="true"></span> InputRadio
+            </NavLink>
+        </li>
+        <li class="nav-item px-3">
+            <NavLink class="nav-link" href="virtualization">
+                <span class="oi oi-check" aria-hidden="true"></span> Virtualization
+            </NavLink>
+        </li>
+        <li class="nav-item px-3">
+            <NavLink class="nav-link" href="persisted-counter">
+                <span class="oi oi-check" aria-hidden="true"></span> Protected browser storage
+            </NavLink>
+        </li>
+        <li class="nav-item px-3">
+            <NavLink class="nav-link" href="lazy-loading">
+                <span class="oi oi-check" aria-hidden="true"></span> Lazy loading
+            </NavLink>
+        </li>
+        <li class="nav-item px-3">
+            <NavLink class="nav-link" href="ui-focus">
+                <span class="oi oi-check" aria-hidden="true"></span> Set UI focus
+            </NavLink>
+        </li>
+        <li class="nav-item px-3">
+            <NavLink class="nav-link" href="catch-all-route-parameters">
+                <span class="oi oi-check" aria-hidden="true"></span> Catch-all route parameters
+            </NavLink>
+        </li>
     </ul>
 </div>
 
@@ -55,6 +91,7 @@
         get => wasm;
         set
         {
+            if (wasm == value) return;
             wasm = value;
             var uriBuilder = new UriBuilder(NavigationManager.Uri);
             if (wasm)

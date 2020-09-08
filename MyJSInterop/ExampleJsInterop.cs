@@ -2,7 +2,7 @@ using System;
 using System.Threading.Tasks;
 using Microsoft.JSInterop;
 
-namespace MyComponents
+namespace MyJSInterop
 {
     // This class provides an example of how JavaScript functionality can be wrapped
     // in a .NET class for easy consumption. The associated JavaScript module is
@@ -18,7 +18,7 @@ namespace MyComponents
         public ExampleJsInterop(IJSRuntime jsRuntime)
         {
             moduleTask = new(() => jsRuntime.InvokeAsync<JSObjectReference>(
-               "import", "./_content/MyComponents/exampleJsInterop.js").AsTask());
+               "import", "./_content/MyJSInterop/exampleJsInterop.js").AsTask());
         }
 
         public async ValueTask<string> Prompt(string message)

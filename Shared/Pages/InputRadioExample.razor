@@ -1,0 +1,53 @@
+﻿@page "/input-radio"
+@using System.ComponentModel.DataAnnotations
+
+<h1>InputRadio component</h1>
+
+<p>Please take a moment to tell us what you think about Blazor.</p>
+
+<EditForm Model="survey" OnValidSubmit="HandleSubmit">
+    <DataAnnotationsValidator />
+    <p>Name: <InputText @bind-Value="survey.Name" /></p>
+    <p>
+        Opinion about blazor:
+        <InputRadioGroup @bind-Value="survey.OpinionAboutBlazor">
+            @foreach (var opinion in opinions)
+            {
+                <div class="form-check">
+                    <InputRadio class="form-check-input" id="@opinion.id" Value="@opinion.id" />
+                    <label class="form-check-label" for="@opinion.id">@opinion.label</label>
+                </div>
+            }
+        </InputRadioGroup>
+    </p>
+    <ValidationSummary />
+    <button type="submit" class="btn btn-primary">Submit</button>
+</EditForm>
+
+<p>@message</p>
+
+@code {
+    BlazorSurvey survey = new BlazorSurvey();
+    string message;
+    (string id, string label)[] opinions = new[]
+    {
+        ("terrible", "Terrible, I prefer vanilla JS."),
+        ("ok", "It's ok I guess..."),
+        ("awesome", "It's awesome!!!")
+    };
+
+    void HandleSubmit()
+    {
+        message = $"Thanks {survey.Name} for trying out Blazor!";
+    }
+
+    public class BlazorSurvey
+    {
+        [Required(ErrorMessage = "Please enter a name.")]
+        public string Name { get; set; }
+
+        [Required(ErrorMessage = "Tell us what you think!")]
+        [RegularExpression("awesome", ErrorMessage = "...are you sure?")]
+        public string OpinionAboutBlazor { get; set; }
+    }
+}
