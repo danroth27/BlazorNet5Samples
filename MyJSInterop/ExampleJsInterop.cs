@@ -13,11 +13,11 @@ namespace MyJSInterop
 
     public class ExampleJsInterop : IAsyncDisposable
     {
-        private readonly Lazy<Task<JSObjectReference>> moduleTask;
+        private readonly Lazy<Task<IJSObjectReference>> moduleTask;
 
         public ExampleJsInterop(IJSRuntime jsRuntime)
         {
-            moduleTask = new(() => jsRuntime.InvokeAsync<JSObjectReference>(
+            moduleTask = new(() => jsRuntime.InvokeAsync<IJSObjectReference>(
                "import", "./_content/MyJSInterop/exampleJsInterop.js").AsTask());
         }
 
