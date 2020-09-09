@@ -19,7 +19,7 @@
 
     private async Task OnNavigateAsync(NavigationContext args)
     {
-        if (args.Path.EndsWith("lazy-loading"))
+        if (args.Path.Contains("lazy-loading"))
         {
             var assemblies = await LazyAssemblyLoader.LoadAssembliesAsync(new string[] { "MyComponents.dll" });
             lazyLoadedAssemblies.AddRange(assemblies);
