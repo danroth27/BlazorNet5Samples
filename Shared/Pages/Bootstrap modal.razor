@@ -1,0 +1,9 @@
+﻿@page "/modal-test"
+
+<Modal @ref="Modal"></Modal>
+
+<button @onclick="() => Modal.Open()">Open Modal</button>
+
+@code {
+    private Modal Modal { get; set; }
+}
